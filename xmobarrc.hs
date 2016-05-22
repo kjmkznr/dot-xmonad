@@ -34,7 +34,7 @@ Config { font = "xft:Nasu M:size=10"
                     , Run Memory ["-t","Mem: <usedratio>%"] 10
                     , Run Swap [] 10
                     , Run Com "uname" ["-s","-r"] "" 36000
-                    , Run BatteryP ["BAT0"] 
+                    , Run BatteryP ["BAT0", "BAT1"]
                                    ["-t", "<acstatus>"
                                    , "-L", "10", "-H", "80"
                                    , "-l", "red", "-h", "green"

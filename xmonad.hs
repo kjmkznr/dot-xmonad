@@ -18,8 +18,8 @@ import XMonad.Util.Cursor               -- setDefaultCursor
 import XMonad.Util.EZConfig             -- additionalKeysP
 import XMonad.Util.Run                  -- unsafeSpawn, spawnPipe, hPutStrLn
 import XMonad.Util.WorkspaceCompare     -- getSortByXineramaRule
-{- import XMonad.Util.Scratchpad -}
-{- import XMonad.StackSet as W -}
+import XMonad.Util.Scratchpad
+import XMonad.StackSet as W
 
 myTerminal = "xterm"
 myXMobar = "xmobar $HOME/.xmonad/xmobarrc.hs"
@@ -96,14 +96,14 @@ myStartupHook = do
     unsafeSpawn myTerminal
 
 myAdditionalKeysP = [
-      ("M-p",   shellPrompt myXPConfig)
+      ("M-r",   shellPrompt myXPConfig)
     , ("M-g",   windowPromptGoto myXPConfig)
     , ("M-m",   withFocused (sendMessage . maximizeRestore))
     , ("M-n",   withFocused minimizeWindow)
     , ("M-S-n", sendMessage RestoreNextMinimizedWin)
 
     -- spawn scratchpad
-    {- , ("M-s", scratchPad) -}
+    , ("M-s", scratchPad)
 
     -- toggle dock visibility
     , ("M-b", sendMessage ToggleStruts)
@@ -112,18 +112,21 @@ myAdditionalKeysP = [
     , ("M1-<Space>",   layoutSplitScreen 2 (TwoPane (3/100) 0.7))
     , ("M-M1-<Space>", rescreen)
 
-    -- volume control
-    , ("<XF86AudioRaiseVolume>", unsafeSpawn "amixer set Master playback 10+")
-    , ("<XF86AudioLowerVolume>", unsafeSpawn "amixer set Master playback 10-")
-    , ("<XF86AudioMute>",        unsafeSpawn "amixer set Master toggle")
+    -- Volume setting media keys
+    , ("<XF86AudioRaiseVolume>", spawn "pactl set-sink-volume 0 +5% && paplay /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga")
+    , ("<XF86AudioLowerVolume>", spawn "pactl set-sink-volume 0 -5% && paplay /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga")
+    , ("<XF86AudioMute>", spawn "pactl set-sink-mute 0 toggle")
+    -- Brightness Keys
+    , ("<XF86MonBrightnessUp>", spawn "xbacklight + 5 -time 100 -steps 1")
+    , ("<XF86MonBrightnessDown>", spawn "xbacklight - 5 -time 100 -steps 1")
 
     -- other commands
     , ("M-S-l", unsafeSpawn "alock -auth pam -bg blank")
-    , ("M-c",   unsafeSpawn "chromium --incognito --force-device-scale-factor=1.6")
+    , ("M-c",   unsafeSpawn "chromium --incognito --force-device-scale-factor=1.0")
     ]
 
-    {- where -}
-      {- scratchPad = scratchpadSpawnActionTerminal myTerminal -}
+    where
+      scratchPad = scratchpadSpawnActionTerminal myTerminal
 
 myXPConfig = greenXPConfig {
                    font              = myFont
