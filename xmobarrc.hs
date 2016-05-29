@@ -1,4 +1,4 @@
-Config { font = "xft:Nasu M:size=12"
+Config { font = "xft:Nasu M:size=10"
        , additionalFonts = []
        , borderColor = "black"
        , border = TopB
