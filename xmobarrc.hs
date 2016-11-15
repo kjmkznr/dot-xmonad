@@ -65,8 +65,9 @@ Config { font = "xft:Nasu M:size=10"
                                                     , "-i", "<left>%"
                                                 ] 50
                     , Run Date "%Y/%m/%d %H:%M:%S" "date" 10
+                    , Run StdinReader
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "%multicpu%%memory%%enp0s31f6%%wlp4s0% }{ %RJTT% %battery% <fc=#ee9a00>%date%</fc>"
+       , template = " %StdinReader% }{ %multicpu%%memory%%enp0s31f6%%wlp4s0% %RJTT% %battery% <fc=#ee9a00>%date%</fc>"
        }
